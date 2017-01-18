@@ -47,4 +47,4 @@ blackjack.service("deckBuilder", function(){
     return deck;
   }
 
-})
+});
