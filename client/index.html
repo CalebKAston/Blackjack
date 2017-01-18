@@ -17,6 +17,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="index.js"></script>
+  <script src="deckBuilder.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,67 +32,80 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-      <div class="container">
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                  Menu <i class="fa fa-bars"></i>
-              </button>
-              <a class="navbar-brand page-scroll" href="#page-top">
-                  <i class="fa fa-play-circle"></i> Blackjack
-              </a>
-          </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-              <ul class="nav navbar-nav">
-                  <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                  <li class="hidden">
-                      <a href="#page-top"></a>
-                  </li>
-                  <li>
-                      <a class="page-scroll" href="#play">play</a>
-                  </li>
-              </ul>
-          </div>
-          <!-- /.navbar-collapse -->
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+          Menu <i class="fa fa-bars"></i>
+        </button>
+          <a class="navbar-brand page-scroll" href="#page-top">
+            <i class="fa fa-play-circle"></i> Blackjack
+          </a>
       </div>
-      <!-- /.container -->
+
+      <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+        <ul class="nav navbar-nav">
+          <li class="hidden">
+            <a href="#page-top"></a>
+          </li>
+          <li>
+            <a class="page-scroll" href="#play">play</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
 
-  <!-- Intro Header -->
   <header class="intro">
-      <div class="intro-body">
-          <div class="container">
-              <div class="row">
-                  <div class="col-md-8 col-md-offset-2">
-                      <h1 class="brand-heading">Blackjack</h1>
-                      <p class="intro-text">A simple way to play.<br>
-                        Click the circle to play.<br></p>
-                      <a href="#play" class="btn btn-circle page-scroll">
-                          <i class="fa fa-angle-double-down animated"></i>
-                      </a>
-                  </div>
-              </div>
+    <div class="intro-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <h1 class="brand-heading">Blackjack</h1>
+            <p class="intro-text">A simple way to play.<br>
+              Click the circle to begin.<br></p>
+            <a href="#play" class="btn btn-circle page-scroll">
+              <i class="fa fa-angle-double-down animated"></i>
+            </a>
           </div>
-      </div>
-  </header>
-
-  <!-- play Section -->
-  <section id="play" class="container content-section text-center">
-      <div class="row">
-        <div class="col-lg-6 col-lg-offset-3">
-          <h3>Scores: Dealer - {{ dealerScore }} Player - {{ playerScore }}</h3>
         </div>
       </div>
-      <div class="row">
-          <div class="col-lg-6">
-            <h2>Dealer</h2>
-          </div>
-          <div class="col-lg-6">
-            <h2>Player</h2>
-          </div>
+    </div>
+  </header>
+
+  <section id="play" class="container content-section">
+    <div class="row">
+
+      <div class="col-lg-6 col-lg-offset-3 text-center">
+        <h3>Scores: Dealer - {{ dealerScore }} Player - {{ playerScore }}</h3>
       </div>
-      <div class="row"></div>
+
+    </div>
+    <div class="row">
+
+      <div class="col-lg-12">
+        <h2>Dealer</h2>
+
+        <p>Cards: <span ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }}</span></p>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col-lg-12">
+        <h2>Player</h2>
+
+        <p>Cards: <span ng-repeat="card in playerCards"> {{ "*" + card.name + " of " + card.suit + "* "}}</span></p>
+
+        <button class="col-lg-6 btn btn-success">
+          Hit
+        </button>
+        <button class="col-lg-6 btn btn-danger">
+          Hold
+        </button>
+      </div>
+
+    </div>
+    <br>
   </section>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
