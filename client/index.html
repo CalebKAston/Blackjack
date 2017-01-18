@@ -18,6 +18,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="index.js"></script>
   <script src="deckBuilder.js"></script>
+  <script src="calculateTotals.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -85,7 +86,7 @@
       <div class="col-lg-12">
         <h2>Dealer</h2>
 
-        <p>Cards: <span ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }}</span></p>
+        <p>Cards: <span ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }}</span><br><span>{{ dealerTotal }}</span></p>
       </div>
 
     </div>
@@ -94,12 +95,12 @@
       <div class="col-lg-12">
         <h2>Player</h2>
 
-        <p>Cards: <span ng-repeat="card in playerCards"> {{ "*" + card.name + " of " + card.suit + "* "}}</span></p>
+        <p>Cards: <span ng-repeat="card in playerCards"> {{ "*" + card.name + " of " + card.suit + "* "}}</span><br><span> {{ playerTotal }}</span></p>
 
-        <button class="col-lg-6 btn btn-success">
+        <button ng-click="hit();" class="col-lg-6 btn btn-success">
           Hit
         </button>
-        <button class="col-lg-6 btn btn-danger">
+        <button ng-click="hold();" class="col-lg-6 btn btn-danger">
           Hold
         </button>
       </div>
