@@ -5,6 +5,9 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
   $scope.dealerScore = 0;
   $scope.bust = false;
   $scope.dealerBust = false;
+  $scope.playerWin = false;
+  $scope.dealerWin = false;
+  $scope.tie = false;
 
   $scope.deck = deckBuilder.shuffle(deckBuilder.deckBuilder(1));
 
@@ -24,14 +27,11 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
     $scope.playerTotalArray = totaler.totalCalculator([$scope.playerCards])[0];
     $scope.playerTotal = $scope.playerTotalArray.join("/");
     $scope.playerHighestTotal = $scope.playerTotalArray[1] || $scope.playerTotalArray[0];
-    if($scope.playerTotalArray[0] > 21){
-      $scope.bust = true;
-      if($scope.dealerTotalArray[1] === 21 && $scope.dealerCards.length === 2){
-        $scope.dealerScore += 2;
-      } else {
-        $scope.dealerScore++;
-      }
+    if($scope.playerHighestTotal > 21){
       console.log("Dealer wins!");
+      $scope.bust = true;
+      $scope.dealerScore++;
+      $scope.dealerWin = true;
     }
   };
 
@@ -41,24 +41,57 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
     $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
     $scope.dealerTotal = $scope.dealerTotalArray.join("/");
     $scope.dealerHighestTotal = $scope.dealerTotalArray[1] || $scope.dealerTotalArray[0];
-    if($scope.dealerTotalArray[0] > 21){
-      $scope.dealerBust = true;
-      if($scope.playerTotalArray[1] === 21 && $scope.playerCards.length === 2){
-        $scope.playerScore += 2;
-      } else {
-        $scope.playerScore++;
-      }
+    if($scope.dealerHighestTotal > 21){
       console.log("Player wins!")
+      $scope.dealerBust = true;
+      $scope.playerScore++;
+      $scope.playerWin = true;
     }
   };
 
   $scope.hold = function(){
     $scope.dealerCards.push($scope.hiddenCard);
+    $scope.hiddenCard = undefined;
     $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
     $scope.dealerTotal = $scope.dealerTotalArray.join("/");
     $scope.dealerHighestTotal = $scope.dealerTotalArray[1] || $scope.dealerTotalArray[0];
-    dealerTurn.takeTurn($scope);
+    if($scope.playerHighestTotal === 21 && $scope.playerCards.length === 2){
+      if($scope.dealerHighestTotal === 21){
+        console.log("It is a tie!");
+        $scope.dealerScore++;
+        $scope.playerScore++;
+        $scope.tie = true;
+      } else {
+        console.log("Player wins!")
+        $scope.playerScore += 2;
+        $scope.playerWin = true;
+      }
+    } else {
+      dealerTurn.takeTurn($scope, totaler);
+    }
   };
+
+  $scope.playAgain = function(){
+    console.log("Round 2");
+    $scope.playerWin = false;
+    $scope.dealerWin = false;
+    $scope.tie = false;
+    $scope.bust = false;
+    $scope.dealerBust = false;
+
+    $scope.deck = deckBuilder.shuffle(deckBuilder.deckBuilder(1));
+
+    $scope.dealerCards = [$scope.deck.pop()];
+    $scope.hiddenCard = $scope.deck.pop();
+    $scope.playerCards = [$scope.deck.pop(), $scope.deck.pop()];
+
+    $scope.playerTotalArray = totaler.totalCalculator([$scope.playerCards])[0];
+    $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
+    $scope.playerTotal = $scope.playerTotalArray.join("/");
+    $scope.dealerTotal = $scope.dealerTotalArray.join("/");
+    $scope.playerHighestTotal = $scope.playerTotalArray[1] || $scope.playerTotalArray[0];
+    $scope.dealerHighestTotal = $scope.dealerTotalArray[1] || $scope.dealerTotalArray[0];
+  }
 }]);
 
 

@@ -83,15 +83,32 @@
       </div>
 
     </div>
+    <div class="row" ng-if="playerWin">
+      <div class="col-lg-6 col-lg-offset-3 text-center alert alert-success">
+        <p><strong>Well done!</strong> Play again?</p>
+        <button class="btn" ng-click="playAgain();"> YES! </button>
+      </div>
+    </div>
+    <div class="row" ng-if="dealerWin">
+      <div class="col-lg-6 col-lg-offset-3 text-center alert alert-danger">
+        <p><strong>Too bad!</strong> Play again?</p>
+        <button class="btn" ng-click="playAgain();"> YES! </button>
+      </div>
+    </div>
+    <div class="row" ng-if="tie">
+      <div class="col-lg-6 col-lg-offset-3 text-center alert alert-info">
+        <p><strong>It's a tie!</strong> Play again?</p>
+        <button class="btn" ng-click="playAgain();"> YES! </button>
+      </div>
+    </div>
     <div class="row">
 
       <div class="col-lg-12">
         <h2 ng-class="{ 'text-danger': dealerBust }">Dealer</h2>
-        <!-- <h2 class="text-danger" ng-if="dealerBust">Bust!</h2> -->
 
         <p>Cards:
-        <span ng-if="dealerCards.length === 1" ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }} *???*</span>
-        <span ng-if="dealerCards.length !== 1" ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }}</span>
+        <span ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }}</span>
+        <span ng-if="hiddenCard">*???*</span>
         <br><span>{{ dealerTotal }}</span></p>
       </div>
 
@@ -100,7 +117,6 @@
 
       <div class="col-lg-12">
         <h2 ng-class="{ 'text-danger': bust }">Player</h2>
-        <!-- <h2 class="text-danger" ng-if="bust">Bust!</h2> -->
 
         <p>Cards: <span ng-repeat="card in playerCards"> {{ "*" + card.name + " of " + card.suit + "* "}}</span>
         <br><span> {{ playerTotal }}</span></p>
