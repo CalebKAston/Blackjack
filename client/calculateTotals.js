@@ -16,7 +16,9 @@ blackjack.service("totaler", function(){
 
         } else {
           for(var totalIndex = playerTotals.length - 1; totalIndex >= 0; totalIndex--){
-            playerTotals.push(playerTotals[totalIndex] + 10);
+            if(playerTotals.indexOf(playerTotals[totalIndex] + 10) === -1 && playerTotals[totalIndex] + 10 < 21){
+              playerTotals.push(playerTotals[totalIndex] + 10);
+            }
           }
           for(var index = 0; index < playerTotals.length; index++){
             playerTotals[index] += 1;

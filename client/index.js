@@ -1,6 +1,6 @@
 var blackjack = angular.module("blackjack", []);
 
-blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler", function($scope, deckBuilder, totaler){
+blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler", "dealerTurn", function($scope, deckBuilder, totaler, dealerTurn){
   $scope.playerScore = 0;
   $scope.dealerScore = 0;
   $scope.bust = false;
@@ -24,32 +24,27 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
     if($scope.playerTotalArray[0] > 21){
       $scope.bust = true;
       $scope.dealerScore++;
+      console.log("Dealer wins!");
     }
   };
 
   $scope.dealerHit = function(){
+    console.log("Dealer Hitting...")
     $scope.dealerCards.push($scope.deck.pop());
     $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
     $scope.dealerTotal = $scope.dealerTotalArray.join("/");
     if($scope.dealerTotalArray[0] > 21){
       $scope.dealerBust = true;
       $scope.playerScore++;
+      console.log("Player wins!")
     }
   };
 
   $scope.hold = function(){
-    var dealerHasAces = false;
     $scope.dealerCards.push($scope.hiddenCard);
     $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
     $scope.dealerTotal = $scope.dealerTotalArray.join("/");
-    for(var scoreIndex = 0; scoreIndex < $scope.dealerTotalArray.length; scoreIndex++){
-      if($scope.dealerTotalArray[scoreIndex].name === "Ace"){
-        dealerHasAces = true;
-      }
-    }
-    if($scope.dealerTotalArray[0] < 17 || $scope.dealerTotalArray[0] < 18 && dealerHasAces || $scope.dealerTotalArray[0] < $scope.playerTotalArray[0]){
-      $scope.dealerHit();
-    }
+    dealerTurn.takeTurn($scope);
   };
 }]);
 
