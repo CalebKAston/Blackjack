@@ -86,8 +86,8 @@
     <div class="row">
 
       <div class="col-lg-12">
-        <h2>Dealer</h2>
-        <h2 class="text-danger" ng-if="dealerBust">Bust!</h2>
+        <h2 ng-class="{ 'text-danger': dealerBust }">Dealer</h2>
+        <!-- <h2 class="text-danger" ng-if="dealerBust">Bust!</h2> -->
 
         <p>Cards:
         <span ng-if="dealerCards.length === 1" ng-repeat="card in dealerCards"> {{ "*" + card.name + " of " + card.suit + "* " }} *???*</span>
@@ -99,10 +99,11 @@
     <div class="row">
 
       <div class="col-lg-12">
-        <h2>Player</h2>
-        <h2 class="text-danger" ng-if="bust">Bust!</h2>
+        <h2 ng-class="{ 'text-danger': bust }">Player</h2>
+        <!-- <h2 class="text-danger" ng-if="bust">Bust!</h2> -->
 
-        <p>Cards: <span ng-repeat="card in playerCards"> {{ "*" + card.name + " of " + card.suit + "* "}}</span><br><span> {{ playerTotal }}</span></p>
+        <p>Cards: <span ng-repeat="card in playerCards"> {{ "*" + card.name + " of " + card.suit + "* "}}</span>
+        <br><span> {{ playerTotal }}</span></p>
 
         <button ng-click="hit();" class="col-lg-6 btn btn-success">
           Hit

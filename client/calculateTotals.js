@@ -1,6 +1,6 @@
 blackjack.service("totaler", function(){
 
-  this.totalCalculator = function(cardArrays){
+  this.totalCalculator = function(cardArrays){ // [[8,A,5]]
     var totals = [];
 
     for(var cardArray = 0; cardArray < cardArrays.length; cardArray++){
@@ -13,6 +13,9 @@ blackjack.service("totaler", function(){
           for(var totalIndex = 0; totalIndex < playerTotals.length; totalIndex++){
             playerTotals[totalIndex] += player[card].value;
           }
+          if(playerTotals[1] > 21){
+            playerTotals = [playerTotals[0]];
+          }
 
         } else {
           for(var totalIndex = playerTotals.length - 1; totalIndex >= 0; totalIndex--){
@@ -22,6 +25,9 @@ blackjack.service("totaler", function(){
           }
           for(var index = 0; index < playerTotals.length; index++){
             playerTotals[index] += 1;
+          }
+          if(playerTotals[1] > 21){
+            playerTotals = [playerTotals[0]];
           }
         }
 

@@ -16,14 +16,21 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
   $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
   $scope.playerTotal = $scope.playerTotalArray.join("/");
   $scope.dealerTotal = $scope.dealerTotalArray.join("/");
+  $scope.playerHighestTotal = $scope.playerTotalArray[1] || $scope.playerTotalArray[0];
+  $scope.dealerHighestTotal = $scope.dealerTotalArray[1] || $scope.dealerTotalArray[0];
 
   $scope.hit = function(){
     $scope.playerCards.push($scope.deck.pop());
     $scope.playerTotalArray = totaler.totalCalculator([$scope.playerCards])[0];
     $scope.playerTotal = $scope.playerTotalArray.join("/");
+    $scope.playerHighestTotal = $scope.playerTotalArray[1] || $scope.playerTotalArray[0];
     if($scope.playerTotalArray[0] > 21){
       $scope.bust = true;
-      $scope.dealerScore++;
+      if($scope.dealerTotalArray[1] === 21 && $scope.dealerCards.length === 2){
+        $scope.dealerScore += 2;
+      } else {
+        $scope.dealerScore++;
+      }
       console.log("Dealer wins!");
     }
   };
@@ -33,9 +40,14 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
     $scope.dealerCards.push($scope.deck.pop());
     $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
     $scope.dealerTotal = $scope.dealerTotalArray.join("/");
+    $scope.dealerHighestTotal = $scope.dealerTotalArray[1] || $scope.dealerTotalArray[0];
     if($scope.dealerTotalArray[0] > 21){
       $scope.dealerBust = true;
-      $scope.playerScore++;
+      if($scope.playerTotalArray[1] === 21 && $scope.playerCards.length === 2){
+        $scope.playerScore += 2;
+      } else {
+        $scope.playerScore++;
+      }
       console.log("Player wins!")
     }
   };
@@ -44,6 +56,7 @@ blackjack.controller("blackjackController", ["$scope", "deckBuilder", "totaler",
     $scope.dealerCards.push($scope.hiddenCard);
     $scope.dealerTotalArray = totaler.totalCalculator([$scope.dealerCards])[0];
     $scope.dealerTotal = $scope.dealerTotalArray.join("/");
+    $scope.dealerHighestTotal = $scope.dealerTotalArray[1] || $scope.dealerTotalArray[0];
     dealerTurn.takeTurn($scope);
   };
 }]);
