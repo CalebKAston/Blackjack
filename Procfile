@@ -1,1 +1,1 @@
-cd ./server && node server.js
+cd cd ./server && node server.js
